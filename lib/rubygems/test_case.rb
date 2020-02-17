@@ -29,6 +29,7 @@ end
 require 'bundler'
 
 require 'minitest/autorun'
+ENV["JARS_SKIP"] = "true"
 
 require 'rubygems/deprecate'
 
