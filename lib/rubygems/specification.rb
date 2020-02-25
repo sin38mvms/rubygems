@@ -857,10 +857,16 @@ class Gem::Specification < Gem::BasicSpecification
   # Loads the default specifications. It should be called only once.
 
   def self.load_defaults
+    Gem.set_default_gem_load_paths
+
     each_spec([Gem.default_specifications_dir]) do |spec|
       # #load returns nil if the spec is bad, so we just ignore
       # it at this stage
       Gem.register_default_spec(spec)
+    end
+
+    $LOADED_FEATURES.each do |loaded_feature|
+      Gem.register_loaded_feature(loaded_feature)
     end
   end
 
@@ -2668,6 +2674,3 @@ class Gem::Specification < Gem::BasicSpecification
   end
 
 end
-
-# DOC: What is this and why is it here, randomly, at the end of this file?
-Gem.clear_paths
