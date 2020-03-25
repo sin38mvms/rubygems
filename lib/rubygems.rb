@@ -1271,6 +1271,12 @@ An Array (#{env.inspect}) was passed in from #{caller[3]}
           next unless $~
         end
 
+        already_loaded = default_gem_load_paths.find do |load_path_entry|
+          $LOADED_FEATURES.include?("#{load_path_entry}/#{file}")
+        end
+
+        spec.activate if already_loaded
+
         @path_to_default_spec_map[file] = spec
         @path_to_default_spec_map[file.sub(suffix_regexp, "")] = spec
       end
@@ -1335,6 +1341,12 @@ An Array (#{env.inspect}) was passed in from #{caller[3]}
     # work
 
     attr_reader :pre_uninstall_hooks
+
+    private
+
+    def default_gem_load_paths
+      @default_gem_load_paths ||= $LOAD_PATH[load_path_insert_index..-1]
+    end
 
   end
 
