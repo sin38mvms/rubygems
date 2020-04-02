@@ -2,8 +2,6 @@
 .rubocop.yml
 CODE_OF_CONDUCT.md
 CONTRIBUTING.md
-Gemfile
-Gemfile.lock
 History.txt
 LICENSE.txt
 MAINTAINERS.txt
