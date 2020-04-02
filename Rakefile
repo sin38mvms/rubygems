@@ -7,9 +7,9 @@ require 'psych'
 
 desc "Setup Rubygems dev environment"
 task :setup do
-  version = File.read("Gemfile.lock").split(/BUNDLED WITH\n   /).last
+  version = File.read("dev_gems.rb.lock").split(/BUNDLED WITH\n   /).last
   sh "gem install bundler:#{version}"
-  sh "bundle install"
+  sh "bundle install --gemfile=dev_gems.rb"
 end
 
 desc "Setup git hooks"
@@ -386,7 +386,7 @@ module Rubygems
 
     def self.all
       files = []
-      exclude = %r{\.git|\./bundler/(?!lib|man|exe|[^/]+\.md|bundler.gemspec)|\./Gemfile.*}ox
+      exclude = %r{\.git|\./bundler/(?!lib|man|exe|[^/]+\.md|bundler.gemspec)|\./dev_gems\.rb.*}ox
       tracked_files = `git ls-files`.split("\n").map {|f| "./#{f}" }
 
       tracked_files.each do |path|
